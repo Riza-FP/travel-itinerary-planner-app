@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { TripInputForm, TripFormData } from "@/components/TripInputForm";
 import { Plane, Compass, Ticket, Map as MapIcon, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
-import { MapLoadingScreen } from "@/components/MapLoadingScreen";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 export default function PlanPage() {
     const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +65,7 @@ export default function PlanPage() {
 
     return (
         <main className="min-h-screen bg-emerald-50 dark:bg-zinc-950 flex flex-col lg:flex-row">
-            {isLoading && <MapLoadingScreen />}
+            {isLoading && <LoadingScreen />}
 
             {/* Left Column: Visuals (Hidden on mobile, Fixed on Desktop) */}
             <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative bg-emerald-900 text-white min-h-screen sticky top-0">

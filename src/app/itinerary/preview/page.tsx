@@ -7,7 +7,6 @@ import { DayPlan } from "@/components/ItineraryDisplay";
 import { Budget } from "@/components/BudgetBreakdown";
 import { supabase } from "@/lib/supabaseClient";
 import { toast } from "sonner";
-import { MapLoadingScreen } from "@/components/MapLoadingScreen";
 import { RegenerateModal } from "@/components/RegenerateModal";
 import { Activity } from "@/components/ItineraryDisplay";
 import { ManualEditModal } from "@/components/ManualEditModal";
@@ -162,7 +161,6 @@ export default function PreviewPage() {
         if (!user) {
             toast.error("Please sign in to save your trip!");
             setIsSaving(false);
-            // The data is already in localStorage("currentTrip"), so just redirect
             router.push("/auth?redirect=/itinerary/preview");
             return;
         }
@@ -174,8 +172,6 @@ export default function PreviewPage() {
             days: tripData.days,
             itinerary_data: itinerary,
             budget_breakdown: budget
-            // Note: We are losing 'travelers' and 'raw budget' here if columns don't exist.
-            // But this matches current schema.
         }).select();
 
         if (error) {
@@ -188,7 +184,6 @@ export default function PreviewPage() {
             if (data && data[0]) {
                 router.push(`/itinerary/${data[0].id}`);
             }
-            // If we redirect, we technically don't need to unset isSaving, but good practice if nav fails
         }
     };
 
@@ -372,7 +367,7 @@ export default function PreviewPage() {
         }
     };
 
-    if (isLoading) return <MapLoadingScreen />;
+    if (isLoading) return <LoadingScreen />;
 
     if (isRegeneratingTrip) return (
         <LoadingScreen
